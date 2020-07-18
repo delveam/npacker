@@ -1,4 +1,4 @@
-const IData = require("./image.js");
+import IData from "./image.js";
 
 class CanvasNode {
   private readonly x: number;

@@ -1,3 +1,4 @@
-#!/usr/bin/env node
+require = require("esm")(module);
+const cli = require("./cli.js").cli;
 
-require("./cli.js")(process.argv.splice(2));
+cli(process.argv.splice(2));
