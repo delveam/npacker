@@ -1,5 +1,5 @@
-import minimist from "minimist";
-import chalk from "chalk";
+const minimist = require("minimist");
+const chalk = require("chalk");
 
 function printHelp() {
   const r = chalk.red;
@@ -21,7 +21,7 @@ function printHelp() {
   process.exit();
 }
 
-export function cli(argsRaw) {
+function cli(argsRaw) {
   const args = minimist(argsRaw, {
     boolean: ["notrim"],
     string: ["output", "filename"],
@@ -45,3 +45,4 @@ export function cli(argsRaw) {
     printHelp();
   }
 }
+module.exports = cli;

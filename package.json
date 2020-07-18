@@ -4,7 +4,9 @@
   "description": "A sprite packer.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node ./build/index.js",
+    "dev": "tsc -p ./tsconfig.dev.json && node ./dev/index.js",
+    "build": "tsc -p ./tsconfig.base.json",
     "format": "prettier --write src/**/*.ts"
   },
   "repository": {
@@ -23,12 +25,15 @@
   },
   "homepage": "https://github.com/austin0209/npacker#readme",
   "dependencies": {
-    "@types/minimist": "^1.2.0",
     "chalk": "^4.1.0",
     "esm": "^3.2.25",
     "minimist": "^1.2.5"
   },
   "devDependencies": {
-    "prettier": "^2.0.5"
+    "@types/chalk": "^2.2.0",
+    "@types/minimist": "^1.2.0",
+    "@types/node": "^14.0.23",
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.7"
   }
 }

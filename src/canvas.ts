@@ -1,18 +1,18 @@
-import { ImageData } from "./image.js";
+const IData = require("./image.js");
 
 class CanvasNode {
   private readonly x: number;
   private readonly y: number;
   private readonly width: number;
   private readonly height: number;
-  img: ImageData;
+  img: IData;
 
   constructor(
     x: number,
     y: number,
     w: number,
     h: number,
-    img = null as ImageData
+    img = null as IData
   ) {
     this.x = x;
     this.y = y;
@@ -46,5 +46,6 @@ class Canvas {
     this.nodes = this.nodes.filter((n) => n.area != 0);
   }
 
-  push(idata: ImageData) {}
+  push(idata: IData) {}
 }
+module.exports.Canvas = Canvas;
