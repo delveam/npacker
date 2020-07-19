@@ -7,7 +7,8 @@ export default interface IData {
   trimH: number;
 }
 
-export function trimmed(data: IData, border = 0) {
+export function trimmed(_data: IData, border = 0) {
+  const data = _data;
   let image = data.img.clone();
 
   // scan for left edge
@@ -51,8 +52,10 @@ export function trimmed(data: IData, border = 0) {
   let newHeight = image.getHeight() - (image.getHeight() - bot);
   image.crop(left, top, newWidth, newHeight);
   if (border != 0) {
-    image = new Jimp(image.getWidth() + border, image.getHeight() + border)
-      .mask(image, 0, 0);
+    image = new Jimp(
+      image.getWidth() + border,
+      image.getHeight() + border
+    ).mask(image, 0, 0);
   }
   return { name: data.name, img: image, trimW: left, trimH: top };
 }

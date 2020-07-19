@@ -1,4 +1,3 @@
-require = require("esm")(module);
-const cli = require("./cli.js").cli;
+import processArgs from "./cli.js";
 
-cli(process.argv.splice(2));
+processArgs(process.argv);

@@ -55,13 +55,34 @@ class Canvas {
     this.nodes.sort((a, b) => a.area - b.area);
   }
 
-  push(idata: IData) {
-    this.nodes.forEach(n => {
+  push(_idata: IData) {
+    const idata = _idata;
+    this.nodes.forEach((n) => {
       let image = idata.img;
-      if (n.idata == null && n.width >= image.getWidth() && n.height >= image.getHeight()) {
-        let newNode = new CanvasNode(n.x, n.y, image.getWidth(), image.getHeight(), idata);
-        let left = new CanvasNode(n.x + image.getWidth(), n.y, n.width - image.getWidth(), image.getHeight());
-        let bot = new CanvasNode(n.x, n.y + image.getHeight(), n.width, n.height - image.getHeight());
+      if (
+        n.idata == null &&
+        n.width >= image.getWidth() &&
+        n.height >= image.getHeight()
+      ) {
+        let newNode = new CanvasNode(
+          n.x,
+          n.y,
+          image.getWidth(),
+          image.getHeight(),
+          idata
+        );
+        let left = new CanvasNode(
+          n.x + image.getWidth(),
+          n.y,
+          n.width - image.getWidth(),
+          image.getHeight()
+        );
+        let bot = new CanvasNode(
+          n.x,
+          n.y + image.getHeight(),
+          n.width,
+          n.height - image.getHeight()
+        );
         this.removeNode(n);
         this.nodes.push(newNode, left, bot);
         this.clean();
