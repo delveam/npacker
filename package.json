@@ -2,7 +2,10 @@
   "name": "npacker",
   "version": "1.0.0",
   "description": "A sprite packer.",
-  "main": "index.js",
+  "main": "./build/index.js",
+  "bin": {
+    "npack": "./build/index.js"
+  },
   "scripts": {
     "start": "node ./build/index.js",
     "dev": "tsc -p ./tsconfig.dev.json && node ./dev/index.js",
@@ -26,6 +29,7 @@
   "homepage": "https://github.com/austin0209/npacker#readme",
   "dependencies": {
     "chalk": "^4.1.0",
+    "esm": "^3.2.25",
     "jimp": "^0.14.0",
     "minimist": "^1.2.5"
   },
