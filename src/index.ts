@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import Canvas from "./canvas.js";
 import IData from "./image.js";
 import processArgs from "./cli.js";
