@@ -3,3 +3,4 @@ build
 dev
 .vscode
 *.png
+result.json

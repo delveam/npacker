@@ -57,11 +57,13 @@ export default function processArgs(argsRaw: string[]): Promise<Arguments> {
       return;
     }
 
+    let path = args._[0];
+
     let isDir = (dir: string) =>
       fs.existsSync(dir) && fs.lstatSync(dir).isDirectory();
 
-    if (!isDir(args._[0])) {
-      reject("Invalid path to images foler!");
+    if (!isDir(path)) {
+      reject("Invalid path to images folder!");
       return;
     }
 
@@ -70,8 +72,12 @@ export default function processArgs(argsRaw: string[]): Promise<Arguments> {
       return;
     }
 
+    if (path.charAt(path.length - 1) == "\\" || path.charAt(path.length - 1) == "/") {
+      path = path.substring(0, path.length - 1);
+    }
+
     resolve({
-      path: args._[0],
+      path: path,
       output: args.output,
       filename: args.filename,
       border: args.border,

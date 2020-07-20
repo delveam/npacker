@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import fs from "fs";
 import Canvas from "./canvas.js";
 import IData from "./image.js";
 import processArgs from "./cli.js";
@@ -9,10 +10,8 @@ processArgs(process.argv.splice(2))
   .then((args) => {
     return readAllImages(args);
   })
-  .then(async ({images, args}) => {
-    images.sort(
-      (a: IData, b: IData) => b.img.getHeight() - a.img.getHeight()
-    );
+  .then(async ({ images, args }) => {
+    images.sort((a: IData, b: IData) => b.img.getHeight() - a.img.getHeight());
 
     let canvasSize = 1;
     let success = false;
@@ -29,12 +28,18 @@ processArgs(process.argv.splice(2))
       }
       if (success) {
         try {
-          const image = await canvas.getPng()
+          const image = await canvas.getPng();
           image.write(args.output + "/" + args.filename + ".png");
-          console.log("Wrote PNG to: " + args.output + " as " + args.filename + ".png");
+          console.log(
+            "Wrote PNG to: " + args.output + " as: " + args.filename + ".png"
+          );
+          const json = canvas.getJson(args.filename);
+          fs.writeFileSync(args.output + "/" + args.filename + ".json", json);
+          console.log(
+            "Wrote JSON to: " + args.output + " as: " + args.filename + ".json"
+          );
         } catch (e) {
-          console.log("ERROR: Could not write png/json file!");
-          console.log(e);
+          console.log("ERROR: Error writing png/json file!");
         }
       }
     }

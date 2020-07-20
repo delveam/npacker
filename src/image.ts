@@ -1,6 +1,6 @@
 import Jimp from "jimp";
 import fs from "fs";
-import { Arguments } from "./cli.js"
+import { Arguments } from "./cli.js";
 
 export default interface IData {
   name: string;
@@ -19,8 +19,8 @@ interface ImagesAndArguments {
   args: Arguments;
 }
 
-function readAllImagesRecur(dir: string, list: PathInfo[]) {
-  const files = fs.readdirSync(dir)
+function getAllImagePaths(dir: string, list: PathInfo[]) {
+  const files = fs.readdirSync(dir);
   files.forEach((file) => {
     let path = dir + "/" + file;
     if (process.platform == "win32") {
@@ -28,14 +28,18 @@ function readAllImagesRecur(dir: string, list: PathInfo[]) {
     }
     let isDir = fs.existsSync(path) && fs.lstatSync(path).isDirectory();
     if (isDir) {
-      readAllImagesRecur(path, list);
+      getAllImagePaths(path, list);
     } else {
       list.push({ path: path, name: file });
     }
   });
 }
 
-async function processImage(pathInfo: PathInfo, trim: boolean, border: number): Promise<IData> {
+async function processImage(
+  pathInfo: PathInfo,
+  trim: boolean,
+  border: number
+): Promise<IData> {
   let path = pathInfo.path;
   try {
     const image = await Jimp.read(path);
@@ -50,15 +54,17 @@ async function processImage(pathInfo: PathInfo, trim: boolean, border: number): 
   }
 }
 
-export async function readAllImages(args: Arguments): Promise<ImagesAndArguments> {
+export async function readAllImages(
+  args: Arguments
+): Promise<ImagesAndArguments> {
   const pathInfos = [] as PathInfo[];
   const dir = args.path;
   const trim = !args.notrim;
   const border = args.border;
 
-  readAllImagesRecur(dir, pathInfos);
+  getAllImagePaths(dir, pathInfos);
   const promises = [] as Promise<IData>[];
-  pathInfos.forEach(pi => {
+  pathInfos.forEach((pi) => {
     promises.push(processImage(pi, trim, border));
   });
   const processedImages = await Promise.all(promises);
@@ -79,7 +85,7 @@ async function trimmed(_data: IData, border = 0) {
         }
       }
     }
-  }
+  };
   const getRight = () => {
     // scan for right edge
     for (let x = image.getWidth() - 1; x >= 0; x--) {
@@ -90,7 +96,7 @@ async function trimmed(_data: IData, border = 0) {
         }
       }
     }
-  }
+  };
   const getTop = () => {
     // scan for top edge
     for (let y = 0; y < image.getHeight(); y++) {
@@ -101,7 +107,7 @@ async function trimmed(_data: IData, border = 0) {
         }
       }
     }
-  }
+  };
   const getBot = () => {
     // scan for bot edge
     for (let y = image.getHeight(); y >= 0; y--) {
@@ -112,12 +118,17 @@ async function trimmed(_data: IData, border = 0) {
         }
       }
     }
-  }
+  };
 
-  let newWidth = getRight() - getLeft();
-  let newHeight = getBot() - getTop();
+  let left = getLeft();
+  let right = getRight();
+  let bot = getBot();
+  let top = getTop();
+  
+  let newWidth = right - left;
+  let newHeight = bot - top;
   try {
-    image.crop(getLeft(), getTop(), newWidth, newHeight);
+    image.crop(left, top, newWidth, newHeight);
   } catch {
     console.log(data.name);
   }
@@ -127,5 +138,5 @@ async function trimmed(_data: IData, border = 0) {
       image.getHeight() + border
     ).blit(image, 0, 0);
   }
-  return { name: data.name, img: image, trimW: getLeft(), trimH: getTop()};
+  return { name: data.name, img: image, trimW: left, trimH: top };
 }
