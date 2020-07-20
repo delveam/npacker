@@ -46,7 +46,7 @@ export default class Canvas {
   private removeNode(toRemove: CanvasNode) {
     for (let i = 0; i < this.nodes.length; i++) {
       if (toRemove == this.nodes[i]) {
-        return this.nodes.splice(i, i);
+        return this.nodes.splice(i, 1);
       }
     }
   }
@@ -58,7 +58,8 @@ export default class Canvas {
 
   push(_idata: IData) {
     const idata = _idata;
-    this.nodes.forEach((n) => {
+    for (let i = 0; i < this.nodes.length; i++) {
+      let n = this.nodes[i];
       let image = idata.img;
       if (
         n.idata == null &&
@@ -72,7 +73,7 @@ export default class Canvas {
           image.getHeight(),
           idata
         );
-        let left = new CanvasNode(
+        let right = new CanvasNode(
           n.x + image.getWidth(),
           n.y,
           n.width - image.getWidth(),
@@ -85,21 +86,27 @@ export default class Canvas {
           n.height - image.getHeight()
         );
         this.removeNode(n);
-        this.nodes.push(newNode, left, bot);
+        this.nodes.push(newNode, right, bot);
         this.clean();
         return true;
       }
-    });
+    }
     return false;
   }
 
   getPng() {
-    return new Jimp(this.width, this.height, (err, image) => {
-      if (err) throw err;
-      this.nodes.forEach(n => {
-        if (n.idata != null) {
-          image.mask(n.idata.img, n.x, n.y);
+    return new Promise<Jimp>((resolve, reject) => {
+      new Jimp(this.width, this.height, (err, image) => {
+        if (err) {
+          reject("Error creating PNG file!");
+          return;
         }
+        this.nodes.forEach((n) => {
+          if (n.idata != null) {
+            image.blit(n.idata.img, n.x, n.y);
+          }
+        });
+        resolve(image);
       });
     });
   }
