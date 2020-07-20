@@ -1,4 +1,5 @@
 import IData from "./image.js";
+import Jimp from "jimp";
 
 class CanvasNode {
   readonly x: number;
@@ -26,7 +27,7 @@ class CanvasNode {
   }
 }
 
-class Canvas {
+export default class Canvas {
   private readonly width: number;
   private readonly height: number;
   private nodes: CanvasNode[];
@@ -90,5 +91,16 @@ class Canvas {
       }
     });
     return false;
+  }
+
+  getPng() {
+    return new Jimp(this.width, this.height, (err, image) => {
+      if (err) throw err;
+      this.nodes.forEach(n => {
+        if (n.idata != null) {
+          image.mask(n.idata.img, n.x, n.y);
+        }
+      });
+    });
   }
 }

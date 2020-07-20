@@ -1,5 +1,7 @@
 import minimist from "minimist";
 import chalk from "chalk";
+import fs from "fs";
+import { exit } from "process";
 
 function printHelp() {
   const r = chalk.red;
@@ -41,8 +43,21 @@ export default function processArgs(argsRaw) {
     },
   });
 
-  if (args._.length != 1) {
+  console.log(args);
+
+  if (args.help && args._.length < 3) {
     printHelp();
+  }
+
+  let isDir = (dir: string) => fs.lstatSync(dir).isDirectory();
+
+  if (!isDir(args._[2])) {
+    console.log("Invalid path to images folder!");
+    exit();
+  }
+
+  if (!isDir(args.output)) {
+    console.log("Invalid output path! This must be an existing directory!");
   }
 
   return args;
