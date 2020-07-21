@@ -2,7 +2,7 @@ import minimist from "minimist";
 import chalk from "chalk";
 import fs from "fs";
 
-function printHelp() {
+function helpAndExit() {
   const r = chalk.red;
   const y = chalk.yellow;
   const g = chalk.greenBright;
@@ -22,7 +22,7 @@ function printHelp() {
   );
   console.log(y("\t{-f --filename}") + cy("<name>") + ":\n\t\tset filename of outputs (filename.png, filename.json). do not include the file extension here.\n\t\tdefault: \"result\"");
   console.log(y("\t{-b --border} ") + cy("<name>") + ":\n\t\tset space between each sprite.\n\t\tdefault: 0");
-  console.log(y("\t{-n --notrim} ") + ":\n\t\tif used, transparent padding will not be trimmed. can be useful if the script is too slow.");
+  console.log(y("\t{-n --notrim}") + ":\n\t\tif used, transparent padding will not be trimmed. can be useful if the script is too slow.");
   process.exit();
 }
 
@@ -56,9 +56,7 @@ export default function processArgs(argsRaw: string[]): Promise<Arguments> {
     });
 
     if (args.help || args._.length != 1) {
-      printHelp();
-      reject(null);
-      return;
+      helpAndExit();
     }
 
     let path = args._[0];
@@ -77,6 +75,7 @@ export default function processArgs(argsRaw: string[]): Promise<Arguments> {
     }
 
     if (path.charAt(path.length - 1) == "\\" || path.charAt(path.length - 1) == "/") {
+      // this is just done for the sake of pretty output
       path = path.substring(0, path.length - 1);
     }
 

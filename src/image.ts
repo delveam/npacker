@@ -50,7 +50,8 @@ async function processImage(
     }
     return result;
   } catch {
-    return Promise.reject("Ignoring non-image file: " + path);
+    console.log("Ignoring non-image file: " + path);
+    return null;
   }
 }
 
@@ -68,7 +69,7 @@ export async function readAllImages(
     promises.push(processImage(pi, trim, border));
   });
   const processedImages = await Promise.all(promises);
-  return { images: processedImages, args: args };
+  return { images: processedImages.filter((i) => i != null), args: args };
 }
 
 async function trimmed(_data: IData, border = 0) {
