@@ -30,11 +30,13 @@ class CanvasNode {
 export default class Canvas {
   private readonly width: number;
   private readonly height: number;
+  private border: number;
   private nodes: CanvasNode[];
 
   constructor(w: number, h: number, border = 0) {
     this.width = w;
     this.height = h;
+    this.border = border;
     this.nodes = [
       new CanvasNode(border, border, w - border, h - border),
       new CanvasNode(0, 0, w, border),
@@ -109,5 +111,30 @@ export default class Canvas {
         resolve(image);
       });
     });
+  }
+
+  getJson(filename: string) {
+    let result = { METADATA: {}, sprites: [] };
+    result.METADATA["name"] = filename;
+    if (this.width == this.height) {
+      result.METADATA["size"] = this.width;
+    } else {
+      result.METADATA["width"] = this.width;
+      result.METADATA["height"] = this.height;
+    }
+    for (let i = 0; i < this.nodes.length; i++) {
+      let n = this.nodes[i];
+      if (n.idata != null) {
+        result.sprites.push({
+          name: n.idata.name.split(".")[0],
+          x: n.x,
+          y: n.y,
+          width: n.width - this.border,
+          height: n.height - this.border,
+          trimRect: { width: n.idata.trimW, height: n.idata.trimH },
+        });
+      }
+    }
+    return JSON.stringify(result, null, 4);
   }
 }
