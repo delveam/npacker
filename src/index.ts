@@ -43,7 +43,4 @@ processArgs(process.argv.splice(2))
         }
       }
     }
-  })
-  .catch((err) => {
-    console.log(err);
   });

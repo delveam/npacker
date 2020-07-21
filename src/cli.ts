@@ -1,10 +1,9 @@
 import minimist from "minimist";
 import chalk from "chalk";
 import fs from "fs";
-import { exit } from "process";
 
 function printHelp() {
-  /*const r = chalk.red;
+  const r = chalk.red;
   const y = chalk.yellow;
   const g = chalk.greenBright;
   const cy = chalk.cyan;
@@ -15,12 +14,16 @@ function printHelp() {
     g("<path to image folder> " + y("[optional params]"))
   );
   console.log("availiable parameters:");
+  console.log(y("\t{-h --help}") + ":\n\t\topen this dialogue.");
   console.log(
     y("\t{-o --output} ") +
     cy("<path to directory>") +
     ":\n\t\tset folder to output to, must be an existing directory.\n\t\tdefault: current working directory."
   );
-  process.exit();*/
+  console.log(y("\t{-f --filename}") + cy("<name>") + ":\n\t\tset filename of outputs (filename.png, filename.json). do not include the file extension here.\n\t\tdefault: \"result\"");
+  console.log(y("\t{-b --border} ") + cy("<name>") + ":\n\t\tset space between each sprite.\n\t\tdefault: 0");
+  console.log(y("\t{-n --notrim} ") + ":\n\t\tif used, transparent padding will not be trimmed. can be useful if the script is too slow.");
+  process.exit();
 }
 
 export interface Arguments {
@@ -41,19 +44,20 @@ export default function processArgs(argsRaw: string[]): Promise<Arguments> {
         o: "output",
         f: "filename",
         b: "border",
-        nt: "notrim",
+        n: "notrim",
       },
       stopEarly: false,
       default: {
-        o: "./",
+        o: process.cwd(),
         f: "result",
         b: 0,
-        notrim: false,
+        n: false,
       },
     });
 
     if (args.help || args._.length != 1) {
-      reject("HELP MESSAGE HERE");
+      printHelp();
+      reject(null);
       return;
     }
 
