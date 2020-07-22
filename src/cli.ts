@@ -10,19 +10,30 @@ function helpAndExit() {
 
   console.log(
     r.bold("usage:  ") +
-    "npacker " +
-    g("<path to image folder> " + y("[optional params]"))
+      "npack " +
+      g("<path to image folder> " + y("[optional params]"))
   );
   console.log("availiable parameters:");
   console.log(y("\t{-h --help}") + ":\n\t\topen this dialogue.");
   console.log(
     y("\t{-o --output} ") +
-    cy("<path to directory>") +
-    ":\n\t\tset folder to output to, must be an existing directory.\n\t\tdefault: current working directory."
+      cy("<path to directory>") +
+      ":\n\t\tset folder to output to, must be an existing directory.\n\t\tdefault: current working directory."
   );
-  console.log(y("\t{-f --filename}") + cy("<name>") + ":\n\t\tset filename of outputs (filename.png, filename.json). do not include the file extension here.\n\t\tdefault: \"result\"");
-  console.log(y("\t{-b --border} ") + cy("<name>") + ":\n\t\tset space between each sprite.\n\t\tdefault: 0");
-  console.log(y("\t{-n --notrim}") + ":\n\t\tif used, transparent padding will not be trimmed. can be useful if the script is too slow.");
+  console.log(
+    y("\t{-f --filename}") +
+      cy("<name>") +
+      ':\n\t\tset filename of outputs (filename.png, filename.json). do not include the file extension here.\n\t\tdefault: "result"'
+  );
+  console.log(
+    y("\t{-b --border} ") +
+      cy("<name>") +
+      ":\n\t\tset space between each sprite.\n\t\tdefault: 0"
+  );
+  console.log(
+    y("\t{-n --notrim}") +
+      ":\n\t\tif used, transparent padding will not be trimmed. can be useful if the script is too slow."
+  );
   process.exit();
 }
 
@@ -74,7 +85,10 @@ export default function processArgs(argsRaw: string[]): Promise<Arguments> {
       return;
     }
 
-    if (path.charAt(path.length - 1) == "\\" || path.charAt(path.length - 1) == "/") {
+    if (
+      path.charAt(path.length - 1) == "\\" ||
+      path.charAt(path.length - 1) == "/"
+    ) {
       // this is just done for the sake of pretty output
       path = path.substring(0, path.length - 1);
     }

@@ -125,7 +125,7 @@ async function trimmed(_data: IData, border = 0) {
   let right = getRight();
   let bot = getBot();
   let top = getTop();
-  
+
   let newWidth = right - left;
   let newHeight = bot - top;
   try {
