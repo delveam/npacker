@@ -27,7 +27,7 @@ function helpAndExit() {
   );
   console.log(
     y("\t{-b --border} ") +
-      cy("<name>") +
+      cy("<integer value>") +
       ":\n\t\tset space between each sprite.\n\t\tdefault: 0"
   );
   console.log(
