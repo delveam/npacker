@@ -26,7 +26,7 @@ availiable parameters:
         {-o --output} <path to directory>:
                 set folder to output to, must be an existing directory.
                 default: current working directory.
-        {-f --filename}<name>:
+        {-f --filename} <name>:
                 set filename of outputs (filename.png, filename.json). do not include the file extension here.
                 default: "result"
         {-b --border} <name>:
