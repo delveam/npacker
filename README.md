@@ -15,7 +15,7 @@ That's it! If everything ran successfully, you can simply run ```npack``` from a
 The first parameter passed into nPacker without a preceding "-" or "--" will be treated as the folder of images to scan. nPacker will search the directory as well as all subdirectories and use all the images it finds. It will automatically ignore all file types that it doesn't support, so the directory you give it does not need to exclusively have image files!
 
 ## Output
-nPacker will output two files: a .png file and a JSON file. By default the names of these files are "result.png" and "result.json" respectively. These files are saved in the current working directory by default. The file name as well as the output path can be configured by optional parameters, as specified below
+nPacker will output two files: a .png file and a JSON file. By default the names of these files are "result.png" and "result.json" respectively. These files are saved in the current working directory by default. The file name as well as the output path can be configured by optional parameters, as specified below.
 
 ## Usage
 ```
