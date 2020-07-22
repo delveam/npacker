@@ -29,7 +29,7 @@ availiable parameters:
         {-f --filename} <name>:
                 set filename of outputs (filename.png, filename.json). do not include the file extension here.
                 default: "result"
-        {-b --border} <name>:
+        {-b --border} <integer value>:
                 set space between each sprite.
                 default: 0
         {-n --notrim}:
