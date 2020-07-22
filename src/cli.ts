@@ -21,7 +21,7 @@ function helpAndExit() {
       ":\n\t\tset folder to output to, must be an existing directory.\n\t\tdefault: current working directory."
   );
   console.log(
-    y("\t{-f --filename}") +
+    y("\t{-f --filename} ") +
       cy("<name>") +
       ':\n\t\tset filename of outputs (filename.png, filename.json). do not include the file extension here.\n\t\tdefault: "result"'
   );
