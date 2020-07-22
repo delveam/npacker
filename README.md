@@ -2,7 +2,7 @@
 A sprite packer made with Node.js, written in TypeScript. This program takes in a folder of .png files, packs them into a single .png file, and spits out a JSON file containing information where every .png file was placed. It also trims alpha padding off of each image in order to save space. This utility can especially be useful for game development.
 
 ## Installation
-The installation process should be the same on every platform. First, make sure you have Node.js as well as npm installed. Then, to install the script globally (so it can be used from anywhere on your system), run:
+The installation process should be the same on every platform. First, make sure you have Node.js as well as npm installed. Then, to install the script globally (so it can be used from anywhere in your system), run:
 ```
 git clone https://github.com/austin0209/npacker
 cd npacker
