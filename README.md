@@ -6,6 +6,7 @@ The installation process should be the same on every platform. First, make sure 
 ```
 git clone https://github.com/austin0209/npacker
 cd npacker
+npm install
 npm run build
 npm install -g
 ```
