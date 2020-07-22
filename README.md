@@ -19,7 +19,7 @@ nPacker will output two files: a .png file and a JSON file. By default the names
 
 ## Usage
 ```
-usage:  npacker <path to image folder> [optional params]
+usage:  npack <path to image folder> [optional params]
 availiable parameters:
         {-h --help}:
                 open this dialogue.
