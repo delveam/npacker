@@ -89,7 +89,7 @@ async function trimmed(_data: IData, border = 0) {
   };
   const getRight = () => {
     // scan for right edge
-    for (let x = image.getWidth() - 1; x >= 0; x--) {
+    for (let x = image.getWidth(); x >= 0; x--) {
       for (let y = 0; y < image.getHeight(); y++) {
         let alpha = Jimp.intToRGBA(image.getPixelColor(x, y)).a;
         if (alpha != 0) {
