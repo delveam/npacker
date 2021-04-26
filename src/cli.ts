@@ -34,6 +34,7 @@ function helpAndExit() {
     y("\t{-n --notrim}") +
       ":\n\t\tif used, transparent padding will not be trimmed. can be useful if the script is too slow."
   );
+  console.log(y("\t{-v --verbose}") + ":\n\t\tprint output verbose");
   process.exit();
 }
 
@@ -43,6 +44,7 @@ export interface Arguments {
   filename: string;
   border: number;
   notrim: boolean;
+  verbose: boolean;
 }
 
 export default function processArgs(argsRaw: string[]): Promise<Arguments> {
@@ -56,6 +58,7 @@ export default function processArgs(argsRaw: string[]): Promise<Arguments> {
         f: "filename",
         b: "border",
         n: "notrim",
+        v: "verbose",
       },
       stopEarly: false,
       default: {
@@ -63,6 +66,7 @@ export default function processArgs(argsRaw: string[]): Promise<Arguments> {
         f: "result",
         b: 0,
         n: false,
+        v: false,
       },
     });
 
@@ -99,6 +103,7 @@ export default function processArgs(argsRaw: string[]): Promise<Arguments> {
       filename: args.filename,
       border: args.border,
       notrim: args.notrim,
+      verbose: args.verbose,
     });
   });
 }

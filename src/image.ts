@@ -38,19 +38,20 @@ function getAllImagePaths(dir: string, list: PathInfo[]) {
 async function processImage(
   pathInfo: PathInfo,
   trim: boolean,
-  border: number
+  border: number,
+  verbose: boolean
 ): Promise<IData> {
   let path = pathInfo.path;
   try {
     const image = await Jimp.read(path);
-    console.log("Found image: " + path);
+    if (verbose) console.log("Found image: " + path);
     let result = { name: pathInfo.name, img: image, trimW: 0, trimH: 0 };
     if (trim) {
       return trimmed(result, border);
     }
     return result;
   } catch {
-    console.log("Ignoring non-image file: " + path);
+    if (verbose) console.log("Ignoring non-image file: " + path);
     return null;
   }
 }
@@ -62,11 +63,12 @@ export async function readAllImages(
   const dir = args.path;
   const trim = !args.notrim;
   const border = args.border;
+  const verbose = args.verbose;
 
   getAllImagePaths(dir, pathInfos);
   const promises = [] as Promise<IData>[];
   pathInfos.forEach((pi) => {
-    promises.push(processImage(pi, trim, border));
+    promises.push(processImage(pi, trim, border, verbose));
   });
   const processedImages = await Promise.all(promises);
   return { images: processedImages.filter((i) => i != null), args: args };
