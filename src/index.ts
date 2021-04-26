@@ -11,7 +11,16 @@ processArgs(process.argv.splice(2))
     return readAllImages(args);
   })
   .then(async ({ images, args }) => {
-    images.sort((a: IData, b: IData) => b.img.getHeight() - a.img.getHeight());
+    images.sort((a: IData, b: IData) => {
+      let res = b.img.getHeight() - a.img.getHeight();
+      if (res == 0) {
+        res = b.img.getWidth() - a.img.getWidth();
+        if (res == 0) {
+          res = a.name.localeCompare(b.name);
+        }
+      }
+      return res;
+    });
 
     let canvasSize = 1;
     let success = false;
