@@ -131,7 +131,7 @@ async function trimmed(_data: IData, border = 0) {
   let newWidth = right - left;
   let newHeight = bot - top;
   try {
-    image.crop(left, top, newWidth, newHeight);
+    image.crop(left, top, newWidth + 1, newHeight + 1);
   } catch {
     console.log(data.name);
   }
