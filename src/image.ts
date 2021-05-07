@@ -77,50 +77,75 @@ export async function readAllImages(
 async function trimmed(_data: IData, border = 0) {
   const data = _data;
   let image = data.img.clone();
+  const numJumps = 4.0;
 
   const getLeft = () => {
     // scan for left edge
+    const numIncrement = Math.ceil(image.getHeight() / numJumps);
     for (let x = 0; x < image.getWidth(); x++) {
-      for (let y = 0; y < image.getHeight(); y++) {
-        let alpha = Jimp.intToRGBA(image.getPixelColor(x, y)).a;
-        if (alpha != 0) {
-          return x;
+      for (let i = 0; i < numIncrement; i++) {
+        let y = i;
+        while (y < image.getHeight()) {
+          let alpha = Jimp.intToRGBA(image.getPixelColor(x, y)).a;
+          if (alpha != 0) {
+            return x;
+          }
+          y += numIncrement;
         }
       }
     }
+    return 0;
   };
   const getRight = () => {
     // scan for right edge
-    for (let x = image.getWidth(); x >= 0; x--) {
-      for (let y = 0; y < image.getHeight(); y++) {
-        let alpha = Jimp.intToRGBA(image.getPixelColor(x, y)).a;
-        if (alpha != 0) {
-          return x;
+    const numIncrement = Math.ceil(image.getHeight() / numJumps);
+    for (let x = image.getWidth() - 1; x >= 0; x--) {
+      for (let i = 0; i < numIncrement; i++) {
+        let y = i;
+        while (y < image.getHeight()) {
+          let alpha = Jimp.intToRGBA(image.getPixelColor(x, y)).a;
+          if (alpha != 0) {
+            return x;
+          }
+          y += numIncrement;
         }
       }
     }
+    return image.getWidth();
   };
   const getTop = () => {
     // scan for top edge
+    const numIncrement = Math.ceil(image.getWidth() / numJumps);
     for (let y = 0; y < image.getHeight(); y++) {
-      for (let x = 0; x < image.getWidth(); x++) {
-        let alpha = Jimp.intToRGBA(image.getPixelColor(x, y)).a;
-        if (alpha != 0) {
-          return y;
+      for (let i = 0; i < numIncrement; i++) {
+        let x = i;
+        while (x < image.getWidth()) {
+          let alpha = Jimp.intToRGBA(image.getPixelColor(x, y)).a;
+          if (alpha != 0) {
+            return y;
+          }
+          x += numIncrement;
         }
       }
     }
+    return 0;
   };
   const getBot = () => {
     // scan for bot edge
-    for (let y = image.getHeight(); y >= 0; y--) {
-      for (let x = 0; x < image.getWidth(); x++) {
-        let alpha = Jimp.intToRGBA(image.getPixelColor(x, y)).a;
-        if (alpha != 0) {
-          return y;
+    const numIncrement = Math.ceil(image.getWidth() / numJumps);
+    for (let y = image.getHeight() - 1; y >= 0; y--) {
+      for (let i = 0; i < numIncrement; i++) {
+        let x = i;
+        while (x < image.getWidth()) {
+          let alpha = Jimp.intToRGBA(image.getPixelColor(x, y)).a;
+          if (alpha != 0) {
+            return y;
+          }
+          x += numIncrement;
         }
       }
     }
+    return image.getHeight();
   };
 
   let left = getLeft();
