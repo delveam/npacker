@@ -52,7 +52,7 @@ async function processImage(
 		return result;
 	} catch {
 		if (verbose) console.log("Ignoring non-image file: " + path);
-		return null;
+		return Promise.reject("File is not supported.");
 	}
 }
 
@@ -71,7 +71,7 @@ export async function readAllImages(
 		promises.push(processImage(pi, trim, border, verbose));
 	});
 	const processedImages = await Promise.all(promises);
-	return { images: processedImages.filter((i) => i != null), args: args };
+	return { images: processedImages.filter((i) => i !== null), args: args };
 }
 
 async function trimmed(_data: IData, border = 0) {

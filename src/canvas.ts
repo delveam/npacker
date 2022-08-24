@@ -18,15 +18,9 @@ class CanvasNode {
 	readonly y: number;
 	readonly width: number;
 	readonly height: number;
-	idata: IData;
+	idata?: IData;
 
-	constructor(
-		x: number,
-		y: number,
-		w: number,
-		h: number,
-		idata = null as IData
-	) {
+	constructor(x: number, y: number, w: number, h: number, idata?: IData) {
 		this.x = x;
 		this.y = y;
 		this.width = w;
