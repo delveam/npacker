@@ -1,6 +1,18 @@
 import IData from "./image.js";
 import Jimp from "jimp";
 
+type Metadata = { name: string; width: number; height: number };
+type SpriteData = {
+	name: string;
+	x: number;
+	y: number;
+	width: number;
+	height: number;
+	trimWidth: number;
+	trimHeight: number;
+};
+type NPackerOutput = { metadata: Metadata; sprites: SpriteData[] };
+
 class CanvasNode {
 	readonly x: number;
 	readonly y: number;
@@ -114,27 +126,30 @@ export default class Canvas {
 	}
 
 	getJson(filename: string) {
-		let result = { METADATA: {}, sprites: [] };
-		result.METADATA["name"] = filename;
-		if (this.width == this.height) {
-			result.METADATA["size"] = this.width;
-		} else {
-			result.METADATA["width"] = this.width;
-			result.METADATA["height"] = this.height;
-		}
+		const metadata: Metadata = {
+			name: filename,
+			width: this.width,
+			height: this.height,
+		};
+
+		const sprites: SpriteData[] = [];
+
 		for (let i = 0; i < this.nodes.length; i++) {
 			let n = this.nodes[i];
 			if (n.idata != null) {
-				result.sprites.push({
+				sprites.push({
 					name: n.idata.name.split(".")[0],
 					x: n.x,
 					y: n.y,
 					width: n.width - this.border,
 					height: n.height - this.border,
-					trimRect: { width: n.idata.trimW, height: n.idata.trimH },
+					trimWidth: n.idata.trimW,
+					trimHeight: n.idata.trimH,
 				});
 			}
 		}
-		return JSON.stringify(result, null, 4);
+
+		const output: NPackerOutput = { metadata, sprites };
+		return JSON.stringify(output);
 	}
 }
