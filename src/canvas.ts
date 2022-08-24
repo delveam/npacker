@@ -121,7 +121,7 @@ export default class Canvas {
 
 	getJson(filename: string) {
 		const metadata: Metadata = {
-			name: filename,
+			name: `${filename}.png`,
 			width: this.width,
 			height: this.height,
 		};
