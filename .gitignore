@@ -1,7 +1,4 @@
-node_modules
-build
-dev
-.vscode
 *.png
-result.json
-test
+atlas.json
+build
+node_modules
