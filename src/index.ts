@@ -185,7 +185,9 @@ class Canvas {
 		this.#width = width;
 		this.#height = height;
 		this.#border = border;
-		this.#open = [new Region(border, border, width - border, height - border)];
+		this.#open = [
+			new Region(border, border, width - border * 2, height - border * 2),
+		];
 		this.#closed = [];
 	}
 
