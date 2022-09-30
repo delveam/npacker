@@ -292,6 +292,8 @@ class Canvas {
 			});
 		}
 
+		sprites.sort((lhs, rhs) => lhs.name.localeCompare(rhs.name));
+
 		return JSON.stringify(sprites);
 	}
 }
